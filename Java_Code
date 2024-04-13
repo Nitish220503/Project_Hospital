@@ -1,0 +1,142 @@
+package ARRAY_2D;
+
+import java.util.*;
+
+class Patient {
+    private String name;
+    private int age;
+    private String gender;
+    // Add more patient information as needed
+
+    public Patient(String name, int age, String gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+}
+
+class Doctor {
+    private String name;
+    private String specialization;
+    // Add more doctor information as needed
+
+    public Doctor(String name, String specialization) {
+        this.name = name;
+        this.specialization = specialization;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+   
+}
+
+class Appointment {
+    private Date date;
+    private Doctor doctor;
+    public Date getDate() {
+        return date;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    private Patient patient;
+
+    public Appointment(Date date, Doctor doctor, Patient patient) {
+        this.date = date;
+        this.doctor = doctor;
+        this.patient = patient;
+    }
+
+    // Getter methods
+    // Setter methods
+}
+
+class Hospital {
+    private List<Doctor> doctors;
+    private List<Patient> patients;
+    private Map<Doctor, List<Appointment>> appointments;
+
+    public Hospital() {
+        doctors = new ArrayList<>();
+        patients = new ArrayList<>();
+        appointments = new HashMap<>();
+    }
+
+    public void addDoctor(Doctor doctor) {
+        doctors.add(doctor);
+        appointments.put(doctor, new ArrayList<>());
+    }
+
+    public void addPatient(Patient patient) {
+        patients.add(patient);
+    }
+
+    public void bookAppointment(Date date, Doctor doctor, Patient patient) {
+        Appointment appointment = new Appointment(date, doctor, patient);
+        appointments.get(doctor).add(appointment);
+    }
+
+    public List<Appointment> getAppointmentsForDoctor(Doctor doctor) {
+        return appointments.get(doctor);
+    }
+
+    // Additional methods as needed
+}
+
+public class HospitalManagementSystem {
+    public static void main(String[] args) {
+        // Sample usage
+        Hospital hospital = new Hospital();
+
+        Doctor doctor1 = new Doctor("Dr. Smith", "Cardiologist");
+        Doctor doctor2 = new Doctor("Dr. Johnson", "Pediatrician");
+
+        Patient patient1 = new Patient("Alice", 30, "Female");
+        Patient patient2 = new Patient("Bob", 40, "Male");
+
+        hospital.addDoctor(doctor1);
+        hospital.addDoctor(doctor2);
+        hospital.addPatient(patient1);
+        hospital.addPatient(patient2);
+
+        // Book an appointment
+        hospital.bookAppointment(new Date(), doctor1, patient1);
+
+        // View appointments for a doctor
+        List<Appointment> appointments = hospital.getAppointmentsForDoctor(doctor1);
+        for (Appointment appointment : appointments) {
+            System.out.println("Date: " + appointment.getDate() + ", Doctor: " + appointment.getDoctor().getName() + ", Patient: " + appointment.getPatient().getName());
+        }
+    }
+}
+
